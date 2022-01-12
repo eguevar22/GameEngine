@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="8" height="10" tilewidth="73" tileheight="43" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="werewolf-Sheet" tilewidth="73" tileheight="43" tilecount="35" columns="5">
+  <image source="../../../../Users/eguev/OneDrive/Escritorio/ITCHIO Assets/Werewolf/werewolf-Sheet.png" width="365" height="301"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="8" height="10">
+  <data encoding="csv">
+1,2,3,4,0,0,0,0,
+5,6,7,8,9,10,0,0,
+11,13,14,16,17,1,0,0,
+34,34,34,34,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+18,19,21,1,0,0,0,0,
+23,24,26,27,28,29,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

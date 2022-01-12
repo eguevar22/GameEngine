@@ -1,0 +1,6 @@
+Problems to be addressed:
+
+- Layers need to be printed to screen only if they are on camera
+- should I create a big map such as the one I have right now, or should I make it
+- bigger
+- I think I can use the camera in the draw function of the components to draw them only of they are in camera

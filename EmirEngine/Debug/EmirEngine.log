@@ -1,0 +1,22 @@
+﻿  Game.cpp
+c:\dev\emirengine\emirengine\emirengine\ecs\transformcomponent.h(30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\spritecomponent.h(147): warning C4018: '>=': signed/unsigned mismatch
+c:\dev\emirengine\emirengine\emirengine\ecs\spritecomponent.h(175): warning C4018: '>=': signed/unsigned mismatch
+c:\dev\emirengine\emirengine\emirengine\ecs\keyboardcontroller.h(25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\keyboardcontroller.h(35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\collidercomponent.h(118): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\collidercomponent.h(119): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\tilecomponent.h(24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\tilecomponent.h(25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\src\game.cpp(177): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\dev\emirengine\emirengine\emirengine\ecs\ecs.h(98): warning C4244: 'argument': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+  c:\dev\emirengine\emirengine\emirengine\ecs\spritecomponent.h(309): note: see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,float,float,int,int,int>(float &&,float &&,int &&,int &&,int &&)' being compiled
+          with
+          [
+              T=TransformComponent
+          ]
+  EmirEngine.vcxproj -> C:\Dev\EmirEngine\EmirEngine\Debug\EmirEngine.exe
