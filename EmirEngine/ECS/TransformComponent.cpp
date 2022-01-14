@@ -73,8 +73,8 @@ void TransformComponent::update()
 		//position.y += velocity.y * static_cast<float>(speed);
 	}
 	
-	
 	centeredXPos = position.x + ((w * sc) / 2);
+	
 
 
 	//std::cout << position.x << " + " << w << " + " << " sc " << "==" << centeredXPos << std::endl;

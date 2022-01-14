@@ -178,7 +178,7 @@ void AutoController::AttackingMode()
 
 
 	//std::cout << targetXPos << std::endl;
-	if (targetXPos > entityXPos + 100)
+	if (targetXPos > entityXPos + 90)
 	{
 
 
@@ -190,7 +190,7 @@ void AutoController::AttackingMode()
 
 
 
-	else if (targetXPos < entityXPos - 100)
+	else if (targetXPos < entityXPos - 90)
 	{
 
 		transform->velocity.x = -1;
@@ -203,7 +203,7 @@ void AutoController::AttackingMode()
 		//std::cout << "at center" << std::endl;
 		transform->velocity.x = 0;
 		Attack();
-		entity->getComponent<CharacterCollider>().collider.w = collider.w + 150;
+		entity->getComponent<CharacterCollider>().collider.w = collider.w + 120;
 
 		//return;
 
@@ -219,6 +219,7 @@ bool AutoController::NearTarget()
 	if (originPos + movementDist >= targetXPos && originPos - movementDist <= targetXPos)
 	{
 		return true;
+		std::cout << "near";
 	}
 
 	return false;

@@ -74,7 +74,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addComponent<TransformComponent>(300, 0, 50, 37, 5);
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
-	player.addComponent<CharacterCollider>("player", 380, 40, 80, 150);
+	player.addComponent<CharacterCollider>("player", 380, 50, 80, 150);
 	//player.addComponent<CharacterCollider>("player", 300, 0, 50*5, 37*5);
 	player.addGroup(groupPlayers);
 
@@ -120,34 +120,40 @@ void Game::update()
 {
 	SDL_GetWindowSize(window, &wWidth, &wHeight);
 	//std::cout << wWidth << " " << wHeight << std::endl;
-	SDL_Rect playerCol = player.getComponent<CharacterCollider>().collider;
+	
 	//std::cout <<"player col is "<< playerCol.y + playerCol.h << std::endl;
 	//SDL_Rect werewolfCol = werewolf.getComponent<CharacterCollider>().collider;	
-	Vector2D playerPos = player.getComponent<TransformComponent>().position;
+	///Vector2D playerPos = player.getComponent<TransformComponent>().position;
 
-	int playerH = player.getComponent<TransformComponent>().h;;
+	int playerH = player.getComponent<TransformComponent>().h * player.getComponent<TransformComponent>().sc;
 
 	manager.refresh();
 	manager.update();
+	SDL_Rect playerCol = player.getComponent<CharacterCollider>().collider;
+	Vector2D playerPos = player.getComponent<TransformComponent>().position;
 	player.getComponent<TransformComponent>().isColliding = false;
 	for (auto& c : colliders)	
 	{
 
 
 		SDL_Rect cCol = c->getComponent<TileCollider>().collider;
+	
+
 		//int colY = c->getComponent<TransformComponent>().position.y;
 
 		//check if any of the ground blocks is colliding with the player
 		//here I erased cCol.y > playerCol.y +50
-		cCol.y -= cCol.h;
+		//cCol.y -= cCol.h;
 		//std::cout << cCol.y << std::endl;;
-		if ((Collision::AABB(cCol, playerCol)) && (playerPos.y + playerH < cCol.y))
+		//std::cout << playerPos.y + 37 * 5 << " and the cCol.y is at " << cCol.y << std::endl;
+		if ((Collision::AABB(cCol, playerCol)) && (playerPos.y + playerH - 25 < cCol.y))
 		{
-
+			//std::cout << playerPos.y + 37 * 5 << " and the cCol.y is at " << cCol.y << std::endl;
 			//std::cout << playerCol.h << std::endl;
 			// if so, prevent the player from falling
-
+			player.getComponent<TransformComponent>().position.y = cCol.y - playerH;
 			player.getComponent<TransformComponent>().collide();
+			std::cout << "colldier";
 		}	
 	}
 
@@ -172,25 +178,31 @@ void Game::update()
 		camera.x = worldWidth;
 	}
 
-	if (player.getComponent<TransformComponent>().position.x > camera.w + camera.x)
+	if (player.getComponent<TransformComponent>().position.x> camera.w + camera.x)
 	{
-		player.getComponent<TransformComponent>().position.x = 0;
-		for (auto& t : tiles)
-		{
-			t->destroy();
-		}
-
+		player.getComponent<TransformComponent>().position.x = 10;
+		player.getComponent<TransformComponent>().position.y -= 40;
 		for (auto& c : colliders)
 		{
 			c->destroy();
 		}
 
+		for (auto& t : tiles)
+		{
+			t->destroy();
+		}
+		map->LoadMap(Level2);
+		
+
+
+
+
 
 
 		assets->DeleteWolf(werewolf);
 		assets->CreateWolf(werewolf2, player, 2500, 700, 5);
-		map->LoadMap(Level2);
 		render();
+
 		
 		/*werewolf2.addComponent<TransformComponent>(2500, 732, 73, 43, 5);
 		werewolf2.addComponent<SpriteComponent>("werewolf", true);
@@ -213,11 +225,11 @@ void Game::render()
 		t->draw();
 	}
 
-	/*for (auto& c : colliders)
+	for (auto& c : colliders)
 	{
 		c->draw();
-	}*/
-
+	}
+	
 	for (auto& p : players)
 	{
 		p->draw();
