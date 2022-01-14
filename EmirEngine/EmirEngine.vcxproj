@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ECS\AutoController.cpp" />
+    <ClCompile Include="ECS\ColliderComponent.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="ECS\Projectile.cpp" />
     <ClCompile Include="ECS\TransformComponent.cpp" />

@@ -35,7 +35,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	//flags = SDL_WINDOW_RESIZABLE;
 	/*if (!fullscreen)
 	{
-		
+
 	}*/
 
 
@@ -55,8 +55,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		}
 
-	SDL_RenderSetLogicalSize(renderer, 1280, 1024);
-		
+		SDL_RenderSetLogicalSize(renderer, 1280, 1024);
+
 		isRunning = true;
 	}
 	assets->AddTexture("terrain", "C:/Dev/EmirEngine/EmirEngine/EmirEngine/assets/myTerrain_ss.png");
@@ -68,8 +68,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("arrow", "assets/arrow.png");
 	std::cout << assets->GetTexture("arrow");
 
-	map = new Map(100,22);
-	map->LoadMap(1);
+	map = new Map(100, 22);
+	map->LoadMap(Level1);
 
 	player.addComponent<TransformComponent>(300, 0, 50, 37, 5);
 	player.addComponent<SpriteComponent>("player", true);
@@ -79,16 +79,16 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addGroup(groupPlayers);
 
 
-
-	werewolf.addComponent<TransformComponent>(480, 532, 73, 43, 5);
+	assets->CreateWolf(werewolf, player, 480, 532, 5);
+	/*werewolf.addComponent<TransformComponent>(480, 532, 73, 43, 5);
 	werewolf.addComponent<SpriteComponent>("werewolf", true);
 	werewolf.addComponent<CharacterCollider>("werewolf", 530, 562, 140, 180);
 	werewolf.addComponent<AutoController>(1125, &player);
-	werewolf.addGroup(groupEnemies);
+	werewolf.addGroup(groupEnemies);*/
+		
 
-	
 
-	
+
 
 
 	//arrow.addComponent<CharacterCollider>("projectile");
@@ -118,8 +118,6 @@ void Game::handleEvents()
 Clock clock;
 void Game::update()
 {
-
-
 	SDL_GetWindowSize(window, &wWidth, &wHeight);
 	//std::cout << wWidth << " " << wHeight << std::endl;
 	SDL_Rect playerCol = player.getComponent<CharacterCollider>().collider;
@@ -132,7 +130,7 @@ void Game::update()
 	manager.refresh();
 	manager.update();
 	player.getComponent<TransformComponent>().isColliding = false;
-	for (auto& c : colliders)
+	for (auto& c : colliders)	
 	{
 
 
@@ -143,27 +141,14 @@ void Game::update()
 		//here I erased cCol.y > playerCol.y +50
 		cCol.y -= cCol.h;
 		//std::cout << cCol.y << std::endl;;
-		if ((Collision::AABB(cCol, playerCol)) && (playerPos.y +playerH < cCol.y))
+		if ((Collision::AABB(cCol, playerCol)) && (playerPos.y + playerH < cCol.y))
 		{
 
 			//std::cout << playerCol.h << std::endl;
 			// if so, prevent the player from falling
 
 			player.getComponent<TransformComponent>().collide();
-
-
-		}
-
-		/*if (werewolf.isActive() && Collision::AABB(werewolfCol, cCol))
-		{
-			//std::cout << playerCol.h << std::endl;
-			// if so, prevent the player from falling
-
-			werewolf.getComponent<TransformComponent>().collide();
-		}*/
-
-
-		//std::cout << werewolf.getComponent<TransformComponent>().position.y << std::endl;
+		}	
 	}
 
 	if (!player.getComponent<TransformComponent>().isColliding && !player.getComponent<TransformComponent>().isAttacking)
@@ -174,9 +159,9 @@ void Game::update()
 	{
 		werewolf.getComponent<TransformComponent>().Fall();
 	}*/
-	camera.x = player.getComponent<TransformComponent>().position.x - camera.w/2;
+	camera.x = player.getComponent<TransformComponent>().position.x - camera.w / 2;
 	//camera.y = player.getComponent<TransformComponent>().position.y - 320;
-	
+
 	//camera.h = 0;
 	if (camera.x < 0)
 	{
@@ -187,7 +172,7 @@ void Game::update()
 		camera.x = worldWidth;
 	}
 
-	if (player.getComponent<TransformComponent>().position.x > camera.w + camera.x+400)
+	if (player.getComponent<TransformComponent>().position.x > camera.w + camera.x + 400)
 	{
 		player.getComponent<TransformComponent>().position.x = 0;
 		for (auto& t : tiles)
@@ -202,20 +187,18 @@ void Game::update()
 
 
 
-		werewolf.delGroup(groupEnemies);
-		werewolf.destroy();
+		assets->DeleteWolf(werewolf);
+		//assets->CreateWolf(werewolf, player, 480, 532, 5);
 		werewolf2.addComponent<TransformComponent>(2500, 732, 73, 43, 5);
 		werewolf2.addComponent<SpriteComponent>("werewolf", true);
 		werewolf2.addComponent<CharacterCollider>("werewolf2", 2650, 762, 140, 180);
 		werewolf2.addComponent<AutoController>(900, &player);
 		werewolf2.addGroup(groupEnemies);
-		
 
 
-
-		map->LoadMap(2);
+		map->LoadMap(Level2);
 		render();
-		
+
 	}
 }
 void Game::render()
@@ -245,11 +228,11 @@ void Game::render()
 		p->draw();
 		//p->delGroup(Game::groupProjectiles);
 		//std::cout << p->isActive() << std::endl;
-		int count = 0;
+	
 		for (auto& e : enemies)
 		{
-			
-			
+
+
 			p->getComponent<ProjectileComponent>().checkCollision(e);
 
 		}
@@ -262,6 +245,7 @@ void Game::render()
 		//std::cout << "the position of the player  is " << player.getComponent < SpriteComponent >().dRec.x << std::endl;
 		//std::cout <<"and the camera is at "<< Game::camera.x << std::endl;
 		e->draw();
+		player.getComponent<CharacterCollider>().checkCollision(e);
 	}
 
 	//werewolf.draw();
@@ -278,5 +262,3 @@ void Game::clean()
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
-
-

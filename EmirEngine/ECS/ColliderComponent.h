@@ -1,5 +1,8 @@
 #pragma once
 #include "Components.h"
+#include "../Src/Collision.h"
+class Collision;
+
 class TileCollider : public Component
 {
 public:
@@ -158,6 +161,9 @@ public:
 
 	void draw() override
 	{
-		//TextureManager::Draw(tex, srcRect, dstRect, SDL_FLIP_NONE);
+		TextureManager::Draw(tex, srcRect, dstRect, SDL_FLIP_NONE);
 	}
+
+	void checkCollision(Entity* enemy);
+
 };

@@ -35,6 +35,7 @@ void TransformComponent::init()
 {
 
 	velocity.Zero();
+	
 
 
 }
@@ -61,10 +62,21 @@ void TransformComponent::update()
 		jumpStrength = minSpeed;
 		//isFalling = false;
 	}
+	if (isBlocking)
+	{
+		receivePunch();
+	}
 
-	position.x += velocity.x * static_cast<float>(speed);
-	position.y += velocity.y * static_cast<float>(speed);
+	else
+	{
+		position.x += velocity.x * static_cast<float>(speed);
+		position.y += velocity.y * static_cast<float>(speed);
+	}
+	
+	
 	centeredXPos = position.x + ((w * sc) / 2);
+
+
 	//std::cout << position.x << " + " << w << " + " << " sc " << "==" << centeredXPos << std::endl;
 
 }
@@ -95,4 +107,25 @@ void TransformComponent::Fall()
 	}
 
 	
+}
+
+void TransformComponent::receivePunch()
+{
+	SpriteComponent* sprite = &entity->getComponent<SpriteComponent>();
+	int face = 1;
+	if (sprite->flip == SDL_FLIP_NONE)
+	{
+		face *= -1;
+	}
+	position.x += face * lateralJumpStrength;
+	if (lateralJumpStrength > 0)
+	{
+		lateralJumpStrength -= 1;
+	}
+
+	else
+	{
+		lateralJumpStrength = 20;
+		isBlocking = false;
+	}
 }

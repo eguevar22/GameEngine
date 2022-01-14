@@ -49,12 +49,12 @@ public:
 	}
 
 
-	void LoadMap(int level)
+	void LoadMap(std::size_t level)
 	{
 
 		//call this function and set a big texture as a rendering target
 		//Load the layers below
-		if (level == 1)
+		if (level == Game::Level1)
 		{
 			sky->LoadLayer("assets/sky_level1.map", tilesX, tilesY);
 

@@ -49,6 +49,7 @@ public:
 	const char* animationType = "Hurt";
 	std::map<const char*, Animation> animations;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	int faceDirection = 1;
 
 
 
@@ -73,10 +74,12 @@ public:
 		Animation attack2 = Animation(5, 7, 50);
 		Animation hurt = Animation(6, 4, 150);
 		Animation die = Animation(7, 6, 150);
+		Animation playerHurt = Animation(8, 12, 100);
+		Animation playerDie = Animation(9, 7, 100);
 
 		//create new animation here: jump
 		//create fall animation
-
+		
 		animations.emplace("Idle", idle);
 		animations.emplace("Walk", walk);
 		animations.emplace("Attack", attack);
@@ -85,6 +88,8 @@ public:
 		animations.emplace("Attack2", attack2);
 		animations.emplace("Hurt", hurt);
 		animations.emplace("Die", die);
+		animations.emplace("playerHurt", playerHurt);
+		animations.emplace("playerDie", playerDie);
 		//emplace jump animation
 		//emplace fall animation
 
@@ -176,16 +181,25 @@ public:
 		{
 
 
+
 			if (!transform->isAlive)
 			{
 				std::cout << "the entity " << mId << "destroyed" << std::endl;
-				entity->delGroup(Game::groupEnemies);
+				if (mId == "player")
+				{
+					Game::isRunning = false;
+
+				}				
+				//entity->delGroup(Game::groupEnemies);
 				entity->destroy();
+				
+				
 				//entity->isActive = true;
 				return;
 
 			}
 			transform->isbeingAnimated = false;
+			transform->isBlocking = false;
 			Play(lastAction);
 
 
@@ -201,6 +215,7 @@ public:
 
 	void Animate(const char* animation, Uint32 mSpeed)
 	{
+		
 		animationType = animation;
 		if (transform->isbeingAnimated == false)
 		{
@@ -214,6 +229,7 @@ public:
 
 	void update() override
 	{
+	
 
 		if (transform->isJumping)
 		{

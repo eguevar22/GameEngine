@@ -45,6 +45,13 @@ public:
 
 	};
 
+	enum Levels : std::size_t
+	{
+		Level1,
+		Level2
+
+	};
+
 private:
 
 

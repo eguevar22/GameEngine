@@ -121,7 +121,7 @@ void AutoController::update()
 
 void AutoController::PatrollingMode()
 {
-
+	entity->getComponent<CharacterCollider>().collider.w = collider.w;
 	transform->speed = 3;
 	//	entity->getComponent<CharacterCollider>().collider.x = colliderX;
 

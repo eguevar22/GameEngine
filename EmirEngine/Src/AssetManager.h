@@ -6,6 +6,8 @@
 #include <vector>
 #include "../ECS/Components.h"
 
+class CharacterCollider;
+class AutoController;
 class AssetManager
 {
 public:
@@ -34,6 +36,32 @@ public:
 	{
 		return textures[tag];
 	}
+
+
+	void CreateWolf(Entity& werewolf, Entity& target, int posX, int posY, int sc)
+	{
+		Vector2D textureSize{ 73,43 };
+		Vector2D colliderSize{ 140,140 };
+		
+		werewolf.addComponent<TransformComponent>(posX, posY, textureSize.x, textureSize.y, sc);		
+		werewolf.addComponent<SpriteComponent>("werewolf", true);		
+		werewolf.addComponent<CharacterCollider>("werewolf", posX+50, posY+50, colliderSize.x, colliderSize.y);
+		werewolf.addComponent<AutoController>(1125, &target);
+		werewolf.addGroup(Game::groupEnemies);
+		
+		
+
+	}
+
+	void DeleteWolf(Entity& werewolf)
+	{
+		werewolf.delGroup(Game::groupEnemies);
+		werewolf.destroy();
+		
+
+
+	}
+
 
 
 private:
