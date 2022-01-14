@@ -45,8 +45,11 @@ public:
 		transform->velocity.x *= x;
 		transform->velocity.y *= y;
 
-		sprite->Play("Idle");
-		sprite->lastAction = "Idle";
+		if (!transform->isbeingAnimated)
+		{
+			sprite->Play("Idle");
+			sprite->lastAction = "Idle";
+		}
 
 	}
 
@@ -96,13 +99,17 @@ public:
 
 
 			case SDLK_ESCAPE:
-				Game::isRunning = false;
-				//transform->position.y = 0;
+				//Game::isRunning = false;
+				transform->position.y = 1;
+				
 				break;
 
 			case SDLK_UP:
 				//sprite->Play("Idle");
 				break;
+
+			case SDLK_SPACE:
+				transform->isShooting = false;
 			}
 		}
 
@@ -126,7 +133,7 @@ public:
 
 				break;
 
-				
+
 
 
 			case SDLK_UP:
@@ -136,9 +143,15 @@ public:
 
 				break;
 			case SDLK_SPACE:
-				sprite->attackType = "Attack2";
-				Attack();
-				sprite->ShootProjectile();
+
+				if (!transform->isShooting)
+				{
+					sprite->Animate("Attack2", 75);
+
+					sprite->ShootProjectile();
+					transform->isShooting = true;
+				}
+
 
 				break;
 

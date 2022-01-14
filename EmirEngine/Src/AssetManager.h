@@ -46,7 +46,7 @@ public:
 		werewolf.addComponent<TransformComponent>(posX, posY, textureSize.x, textureSize.y, sc);		
 		werewolf.addComponent<SpriteComponent>("werewolf", true);		
 		werewolf.addComponent<CharacterCollider>("werewolf", posX+50, posY+50, colliderSize.x, colliderSize.y);
-		werewolf.addComponent<AutoController>(1125, &target);
+		werewolf.addComponent<AutoController>(1125,20, &target);
 		werewolf.addGroup(Game::groupEnemies);
 		
 		

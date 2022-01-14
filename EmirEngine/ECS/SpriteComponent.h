@@ -179,12 +179,12 @@ public:
 
 		if (delta >= frames - 1)
 		{
-
-
+			
+			
 
 			if (!transform->isAlive)
 			{
-				std::cout << "the entity " << mId << "destroyed" << std::endl;
+				
 				if (mId == "player")
 				{
 					Game::isRunning = false;
@@ -199,7 +199,7 @@ public:
 
 			}
 			transform->isbeingAnimated = false;
-			transform->isBlocking = false;
+			transform->isbeingHit = false;
 			Play(lastAction);
 
 
@@ -244,6 +244,7 @@ public:
 		else if (!transform->isAttacking && !transform->isbeingAnimated)
 		{
 			//std::cout << "last action is" << lastAction;
+
 			Play(lastAction);
 		}
 
@@ -272,6 +273,7 @@ public:
 
 			else
 			{
+				
 				sRec.x = sRec.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
 
 			}

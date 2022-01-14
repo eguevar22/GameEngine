@@ -161,7 +161,7 @@ public:
 
 	void draw() override
 	{
-		TextureManager::Draw(tex, srcRect, dstRect, SDL_FLIP_NONE);
+		//TextureManager::Draw(tex, srcRect, dstRect, SDL_FLIP_NONE);
 	}
 
 	void checkCollision(Entity* enemy);

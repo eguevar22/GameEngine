@@ -17,9 +17,11 @@ private:
 
 
 public:
+	int hitStrength;
+	int colliderX;
 
 	AutoController() = default;
-	AutoController(int mdst, Entity* mTarget);
+	AutoController(int mdst, int strength, Entity* mTarget);
 
 	void init() override;
 	void Attack();
@@ -28,7 +30,8 @@ public:
 	void PatrollingMode();
 	void AttackingMode();
 	bool NearTarget();
-	int colliderX;
+	int GetStrength();
+
 
 
 

@@ -19,21 +19,23 @@ public:
 	
 	Vector2D position;
 	Vector2D velocity;
+	Entity* currentEnemy=nullptr;
 	const int gravity = -2;
 	float jumpStrength = 40;
-	float lateralJumpStrength = 20;
+	float lateralJumpStrength = 0;	
 	bool isJumping = false;
 	bool isAttacking = false;
 	bool isFalling = false;
 	bool isColliding = false;
 	bool isbeingAnimated = false;
-	bool isBlocking = false;
+	bool isbeingHit = false;
+	bool isShooting = false;
 	bool isAlive = true;
 	int minSpeed = -jumpStrength;
 
 	float centeredXPos = 0;
 	int maxHealth = 100;
-	int currentHealth = 10;
+	int currentHealth = 100;
 
 	int speed = 12;
 	int w = 32;
@@ -54,7 +56,9 @@ public:
 	void setPos(int x, int y);
 	void collide();
 	void Fall();
-	void receivePunch();
+	void receivePunch(Entity* enemy);
+
+	void lateralFly();
 
 
 };

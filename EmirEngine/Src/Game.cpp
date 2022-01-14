@@ -79,7 +79,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addGroup(groupPlayers);
 
 
-	assets->CreateWolf(werewolf, player, 480, 532, 5);
+	assets->CreateWolf(werewolf, player, 480, 500, 5);
 	/*werewolf.addComponent<TransformComponent>(480, 532, 73, 43, 5);
 	werewolf.addComponent<SpriteComponent>("werewolf", true);
 	werewolf.addComponent<CharacterCollider>("werewolf", 530, 562, 140, 180);
@@ -151,7 +151,7 @@ void Game::update()
 		}	
 	}
 
-	if (!player.getComponent<TransformComponent>().isColliding && !player.getComponent<TransformComponent>().isAttacking)
+	if (!player.getComponent<TransformComponent>().isColliding )
 	{
 		player.getComponent<TransformComponent>().Fall();
 	}
@@ -172,7 +172,7 @@ void Game::update()
 		camera.x = worldWidth;
 	}
 
-	if (player.getComponent<TransformComponent>().position.x > camera.w + camera.x + 400)
+	if (player.getComponent<TransformComponent>().position.x > camera.w + camera.x)
 	{
 		player.getComponent<TransformComponent>().position.x = 0;
 		for (auto& t : tiles)
@@ -188,16 +188,18 @@ void Game::update()
 
 
 		assets->DeleteWolf(werewolf);
-		//assets->CreateWolf(werewolf, player, 480, 532, 5);
-		werewolf2.addComponent<TransformComponent>(2500, 732, 73, 43, 5);
-		werewolf2.addComponent<SpriteComponent>("werewolf", true);
-		werewolf2.addComponent<CharacterCollider>("werewolf2", 2650, 762, 140, 180);
-		werewolf2.addComponent<AutoController>(900, &player);
-		werewolf2.addGroup(groupEnemies);
-
-
+		assets->CreateWolf(werewolf2, player, 2500, 700, 5);
 		map->LoadMap(Level2);
 		render();
+		
+		/*werewolf2.addComponent<TransformComponent>(2500, 732, 73, 43, 5);
+		werewolf2.addComponent<SpriteComponent>("werewolf", true);
+		werewolf2.addComponent<CharacterCollider>("werewolf2", 2650, 762, 140, 180);
+		werewolf2.addComponent<AutoController>(900,20, &player);
+		werewolf2.addGroup(groupEnemies);*/
+
+
+
 
 	}
 }
@@ -259,6 +261,7 @@ void Game::render()
 void Game::clean()
 {
 	SDL_DestroyWindow(window);
+
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }

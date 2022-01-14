@@ -2,16 +2,17 @@
 
 
 
-AutoController::AutoController(int mdst, Entity* mTarget)
+AutoController::AutoController(int mdst,int strength, Entity* mTarget)
 {
 	target = mTarget;
 	movementDist = mdst;
+	hitStrength = strength;
 	//collider = entity->ge tComponent<CharacterCollider>().collider;
 
 }
 
 
-void AutoController::init()
+void AutoController::init() 
 {
 	if (!entity->hasComponent<TransformComponent>())
 	{
@@ -177,7 +178,7 @@ void AutoController::AttackingMode()
 
 
 	//std::cout << targetXPos << std::endl;
-	if (targetXPos > entityXPos + 140)
+	if (targetXPos > entityXPos + 100)
 	{
 
 
@@ -189,7 +190,7 @@ void AutoController::AttackingMode()
 
 
 
-	else if (targetXPos < entityXPos - 140)
+	else if (targetXPos < entityXPos - 100)
 	{
 
 		transform->velocity.x = -1;
@@ -222,6 +223,13 @@ bool AutoController::NearTarget()
 
 	return false;
 }
+
+
+int AutoController::GetStrength()
+{
+	return hitStrength;
+}
+
 
 
 

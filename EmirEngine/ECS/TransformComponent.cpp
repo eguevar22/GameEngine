@@ -62,15 +62,15 @@ void TransformComponent::update()
 		jumpStrength = minSpeed;
 		//isFalling = false;
 	}
-	if (isBlocking)
+	if (isbeingHit)
 	{
-		receivePunch();
+		lateralFly();
 	}
 
 	else
 	{
 		position.x += velocity.x * static_cast<float>(speed);
-		position.y += velocity.y * static_cast<float>(speed);
+		//position.y += velocity.y * static_cast<float>(speed);
 	}
 	
 	
@@ -109,9 +109,22 @@ void TransformComponent::Fall()
 	
 }
 
-void TransformComponent::receivePunch()
+void TransformComponent::receivePunch(Entity* enemy)
 {
-	SpriteComponent* sprite = &entity->getComponent<SpriteComponent>();
+	currentEnemy = enemy;
+	
+	if (!isbeingHit)
+	{
+		lateralJumpStrength = currentEnemy->getComponent<AutoController>().GetStrength();
+		isbeingHit = true;
+	}
+
+
+}
+
+void TransformComponent::lateralFly()
+{
+	SpriteComponent* sprite = &currentEnemy->getComponent<SpriteComponent>();
 	int face = 1;
 	if (sprite->flip == SDL_FLIP_NONE)
 	{
@@ -125,7 +138,8 @@ void TransformComponent::receivePunch()
 
 	else
 	{
-		lateralJumpStrength = 20;
-		isBlocking = false;
+
+		isbeingHit = false;
+		currentEnemy = nullptr;
 	}
 }
