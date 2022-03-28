@@ -1,6 +1,6 @@
-# GameEngine
+# GameEngine and Portfolio
 
-Further details at: https://eguevar22.github.io/Portfolio
+Portfolio with further explanation and images: https://eguevar22.github.io/Portfolio
 
 Credits
 Enemy and player animation tilesets: https://rvros.itch.io/
